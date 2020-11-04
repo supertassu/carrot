@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Taavi=20V=C3=A4=C3=A4n=C3=A4nen?= <hi@tassu.me>
+Date: Wed, 4 Nov 2020 16:34:29 +0200
+Subject: [PATCH] Add translateKey API
+
+
+diff --git a/src/main/java/net/minecraft/server/LocaleLanguage.java b/src/main/java/net/minecraft/server/LocaleLanguage.java
+index 29d554835..e5464bd56 100644
+--- a/src/main/java/net/minecraft/server/LocaleLanguage.java
++++ b/src/main/java/net/minecraft/server/LocaleLanguage.java
+@@ -95,4 +95,5 @@ public abstract class LocaleLanguage {
+     public abstract String a(String s);
+ 
+     public abstract boolean b(String s);
++    public boolean hasKey(String key) { return b(key); } // Carrot - OBFHELPER
+ }
+diff --git a/src/main/java/wtf/taavi/carrot/server/RealCarrot.java b/src/main/java/wtf/taavi/carrot/server/RealCarrot.java
+index 7296dd948..b7037b81b 100644
+--- a/src/main/java/wtf/taavi/carrot/server/RealCarrot.java
++++ b/src/main/java/wtf/taavi/carrot/server/RealCarrot.java
+@@ -1,5 +1,6 @@
+ package wtf.taavi.carrot.server;
+ 
++import net.minecraft.server.LocaleLanguage;
+ import org.bukkit.Bukkit;
+ import wtf.taavi.carrot.api.Carrot;
+ 
+@@ -15,6 +16,15 @@ public class RealCarrot implements Carrot {
+ 		return this.config;
+ 	}
+ 
++	@Override
++	public String translateKey(String key) {
++		if (LocaleLanguage.getInstance().hasKey(key)) {
++			throw new IllegalArgumentException("No such translation key " + key + " exists");
++		}
++
++		return LocaleLanguage.getInstance().translateKey(key);
++	}
++
+ 	public void registerCommands() {
+ 
+ 	}

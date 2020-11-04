@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Taavi=20V=C3=A4=C3=A4n=C3=A4nen?= <hi@tassu.me>
+Date: Wed, 4 Nov 2020 16:32:35 +0200
+Subject: [PATCH] Add translateKey API
+
+
+diff --git a/src/main/java/org/bukkit/entity/EntityType.java b/src/main/java/org/bukkit/entity/EntityType.java
+index 692b75eb..d08aacfe 100644
+--- a/src/main/java/org/bukkit/entity/EntityType.java
++++ b/src/main/java/org/bukkit/entity/EntityType.java
+@@ -422,7 +422,7 @@ public enum EntityType implements Keyed {
+      * @return the translation key
+      */
+     @Nullable
+-    String getTranslationKey() {
++    public String getTranslationKey() { // Carrot - make public
+         return org.bukkit.Bukkit.getUnsafe().getTranslationKey(this);
+     }
+ }
+diff --git a/src/main/java/wtf/taavi/carrot/api/Carrot.java b/src/main/java/wtf/taavi/carrot/api/Carrot.java
+index 2a808310..d23ce19a 100644
+--- a/src/main/java/wtf/taavi/carrot/api/Carrot.java
++++ b/src/main/java/wtf/taavi/carrot/api/Carrot.java
+@@ -4,4 +4,6 @@ import org.jetbrains.annotations.NotNull;
+ 
+ public interface Carrot {
+ 	@NotNull CarrotConfig getConfig();
++
++	@NotNull String translateKey(@NotNull String key);
+ }

@@ -5,7 +5,7 @@ Subject: [PATCH] Rebrand as Carrot
 
 
 diff --git a/pom.xml b/pom.xml
-index 1c33b1f4..79973e14 100644
+index 1c33b1f4..af6cb1d3 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,19 +3,19 @@
@@ -22,7 +22,7 @@ index 1c33b1f4..79973e14 100644
 -    <groupId>com.destroystokyo.paper</groupId>
 -    <artifactId>paper-api</artifactId>
 +    <groupId>wtf.taavi.carrot</groupId>
-+    <artifactId>Carrot-API</artifactId>
++    <artifactId>carrot-api</artifactId>
      <version>1.16.4-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  

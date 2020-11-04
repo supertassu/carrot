@@ -1,0 +1,68 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Taavi=20V=C3=A4=C3=A4n=C3=A4nen?= <hi@tassu.me>
+Date: Wed, 4 Nov 2020 15:35:52 +0200
+Subject: [PATCH] Add Carrot skeleton
+
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index 464b2161..1745bfdd 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -50,6 +50,7 @@ import org.bukkit.util.CachedServerIcon;
+ import org.jetbrains.annotations.Contract;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
++import wtf.taavi.carrot.api.Carrot; // Carrot
+ 
+ /**
+  * Represents the Bukkit core, for version and Server singleton handling
+@@ -57,6 +58,26 @@ import org.jetbrains.annotations.Nullable;
+ public final class Bukkit {
+     private static Server server;
+ 
++    // Carrot start
++    private static Carrot carrot;
++
++    /**
++     * Gets the current {@link Carrot} singleton
++     */
++    @NotNull
++    public static Carrot getCarrot() {
++        return carrot;
++    }
++
++    public static void setCarrot(@NotNull Carrot carrot) {
++        if (Bukkit.carrot != null) {
++            throw new UnsupportedOperationException("Attempt to redefine singleton Carrot");
++        }
++
++        Bukkit.carrot = carrot;
++    }
++    // Carrot end
++
+     /**
+      * Static class cannot be initialized.
+      */
+diff --git a/src/main/java/wtf/taavi/carrot/api/Carrot.java b/src/main/java/wtf/taavi/carrot/api/Carrot.java
+new file mode 100644
+index 00000000..2a808310
+--- /dev/null
++++ b/src/main/java/wtf/taavi/carrot/api/Carrot.java
+@@ -0,0 +1,7 @@
++package wtf.taavi.carrot.api;
++
++import org.jetbrains.annotations.NotNull;
++
++public interface Carrot {
++	@NotNull CarrotConfig getConfig();
++}
+diff --git a/src/main/java/wtf/taavi/carrot/api/CarrotConfig.java b/src/main/java/wtf/taavi/carrot/api/CarrotConfig.java
+new file mode 100644
+index 00000000..64a7807d
+--- /dev/null
++++ b/src/main/java/wtf/taavi/carrot/api/CarrotConfig.java
+@@ -0,0 +1,4 @@
++package wtf.taavi.carrot.api;
++
++public interface CarrotConfig {
++}
