@@ -1,0 +1,18 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>wtf.taavi.carrot</groupId>
+    <artifactId>carrot-parent</artifactId>
+    <version>dev-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>carrot (Parent)</name>
+
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <finalName>${project.artifactId}</finalName>
+    </build>
+    <modules>
+        <module>Carrot-API</module>
+        <module>Carrot-Server</module>
+    </modules>
+</project>
