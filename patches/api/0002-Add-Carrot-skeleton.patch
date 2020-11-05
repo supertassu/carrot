@@ -58,11 +58,15 @@ index 00000000..2a808310
 +}
 diff --git a/src/main/java/wtf/taavi/carrot/api/CarrotConfig.java b/src/main/java/wtf/taavi/carrot/api/CarrotConfig.java
 new file mode 100644
-index 00000000..64a7807d
+index 00000000..1518896e
 --- /dev/null
 +++ b/src/main/java/wtf/taavi/carrot/api/CarrotConfig.java
-@@ -0,0 +1,4 @@
+@@ -0,0 +1,8 @@
 +package wtf.taavi.carrot.api;
 +
++/**
++ * This class only contains carrot configuration options that are meant to be used on the API side.
++ */
 +public interface CarrotConfig {
++
 +}

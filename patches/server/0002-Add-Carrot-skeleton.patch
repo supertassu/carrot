@@ -5,19 +5,27 @@ Subject: [PATCH] Add Carrot skeleton
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 5504facd2..a8d0211fe 100644
+index 5504facd2..c9d7132dc 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -169,6 +169,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -169,6 +169,15 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          com.destroystokyo.paper.PaperConfig.registerCommands();
          com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
          // Paper end
-+        wtf.taavi.carrot.server.RealCarrot.getInstance().registerCommands(); // Carrot
++        // Carrot start
++        try {
++            wtf.taavi.carrot.server.RealCarrot.getInstance().getConfig().init((java.io.File) options.valueOf("carrot-settings"));
++        } catch (Exception e) {
++            DedicatedServer.LOGGER.error("Unable to load carrot configuration", e);
++            return false;
++        }
++        wtf.taavi.carrot.server.RealCarrot.getInstance().registerCommands();
++        // Carrot end
  
          this.setPVP(dedicatedserverproperties.pvp);
          this.setAllowFlight(dedicatedserverproperties.allowFlight);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d48a22178..94b75ab9a 100644
+index d48a22178..a9a81a0e5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -73,7 +73,6 @@ import net.minecraft.server.GameRules;
@@ -33,7 +41,7 @@ index d48a22178..94b75ab9a 100644
          Bukkit.setServer(this);
  
 +        // Carrot start
-+        Bukkit.setCarrot(new wtf.taavi.carrot.server.RealCarrot());
++        Bukkit.setCarrot(wtf.taavi.carrot.server.RealCarrot.getInstance());
 +        // Carrot end
 +
          // Register all the Enchantments and PotionTypes now so we can stop new registration immediately after
@@ -76,18 +84,20 @@ index 9118f0542..735ffa61c 100644
                          .withRequiredArg()
 diff --git a/src/main/java/wtf/taavi/carrot/server/RealCarrot.java b/src/main/java/wtf/taavi/carrot/server/RealCarrot.java
 new file mode 100644
-index 000000000..7296dd948
+index 000000000..2c49c5fc6
 --- /dev/null
 +++ b/src/main/java/wtf/taavi/carrot/server/RealCarrot.java
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,23 @@
 +package wtf.taavi.carrot.server;
 +
 +import org.bukkit.Bukkit;
 +import wtf.taavi.carrot.api.Carrot;
 +
 +public class RealCarrot implements Carrot {
++	private static RealCarrot instance = new RealCarrot();
++
 +	public static RealCarrot getInstance() {
-+		return (RealCarrot) Bukkit.getCarrot();
++		return instance;
 +	}
 +
 +	private final RealCarrotConfig config = new RealCarrotConfig();
@@ -103,10 +113,10 @@ index 000000000..7296dd948
 +}
 diff --git a/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java b/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java
 new file mode 100644
-index 000000000..124c9a07b
+index 000000000..99ec21ffc
 --- /dev/null
 +++ b/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,78 @@
 +package wtf.taavi.carrot.server;
 +
 +import org.bukkit.Bukkit;
@@ -160,16 +170,14 @@ index 000000000..124c9a07b
 +		}
 +
 +		for (Method method : getClass().getDeclaredMethods()) {
-+			if (Modifier.isPrivate(method.getModifiers())) {
-+				if (method.getParameterTypes().length == 0 && method.getReturnType() == Void.TYPE && method.getName().startsWith("process")) {
-+					try {
-+						method.setAccessible(true);
-+						method.invoke(this);
-+					} catch (InvocationTargetException ex) {
-+						throw new RuntimeException(ex);
-+					} catch (Exception ex) {
-+						Bukkit.getLogger().log(Level.SEVERE, "Error invoking " + method, ex);
-+					}
++			if (Modifier.isPrivate(method.getModifiers()) && method.getParameterTypes().length == 0 && method.getReturnType() == Void.TYPE && method.getName().startsWith("process")) {
++				try {
++					method.setAccessible(true);
++					method.invoke(this);
++				} catch (InvocationTargetException ex) {
++					throw new RuntimeException(ex);
++				} catch (Exception ex) {
++					Bukkit.getLogger().log(Level.SEVERE, "Error invoking " + method, ex);
 +				}
 +			}
 +		}

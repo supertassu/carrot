@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Taavi=20V=C3=A4=C3=A4n=C3=A4nen?= <hi@tassu.me>
+Date: Thu, 5 Nov 2020 09:56:31 +0200
+Subject: [PATCH] Allow configuring conflicting enchantments
+
+
+diff --git a/src/main/java/wtf/taavi/carrot/api/Carrot.java b/src/main/java/wtf/taavi/carrot/api/Carrot.java
+index d23ce19a..4a960ce9 100644
+--- a/src/main/java/wtf/taavi/carrot/api/Carrot.java
++++ b/src/main/java/wtf/taavi/carrot/api/Carrot.java
+@@ -1,9 +1,12 @@
+ package wtf.taavi.carrot.api;
+ 
++import org.bukkit.enchantments.Enchantment;
+ import org.jetbrains.annotations.NotNull;
+ 
+ public interface Carrot {
+ 	@NotNull CarrotConfig getConfig();
+ 
+ 	@NotNull String translateKey(@NotNull String key);
++
++	boolean doEnchantmentsConflict(@NotNull Enchantment first, @NotNull Enchantment second);
+ }
