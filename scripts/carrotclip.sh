@@ -13,9 +13,10 @@
   rm -f "$workdir/Paperclip/assembly/target/paperclip-${mcver}.jar" "$basedir/carrotclip.jar"
 
   (
+    set -e
     cd "$workdir/Paperclip"
     mvn clean package "-Dmcver=$mcver" "-Dpaperjar=$carrotjar" "-Dvanillajar=$vanillajar"
-  )
+  ) || exit 1
   cp "$workdir/Paperclip/assembly/target/paperclip-${mcver}.jar" "$basedir/carrotclip.jar"
 
   echo ""

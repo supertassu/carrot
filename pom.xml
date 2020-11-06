@@ -15,4 +15,11 @@
         <module>Carrot-API</module>
         <module>Carrot-Server</module>
     </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>taavi-public</id>
+            <url>https://maven.taavi.wtf/public/</url>
+        </repository>
+    </distributionManagement>
 </project>
