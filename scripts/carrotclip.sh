@@ -12,7 +12,6 @@
   vanillajar="$workdir/Minecraft/$mcver/$mcver.jar"
 
   (
-    set -e
     cd "$workdir/Paperclip"
     mvn clean package "-Dmcver=$mcver" "-Dpaperjar=$carrotjar" "-Dvanillajar=$vanillajar"
   )

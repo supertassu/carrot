@@ -69,7 +69,6 @@ case "$1" in
   ;;
 "jar" | "carrotclip")
   (
-    set -e
     basedir
     cd "$basedir"
     if [ "$2" != "fast" ]; then
