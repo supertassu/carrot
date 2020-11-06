@@ -10,6 +10,7 @@
   mcver=$(grep <"$workdir/BuildData/info.json" minecraftVersion | cut -d '"' -f 4)
   carrotjar="$basedir/Carrot-Server/target/carrot-$mcver.jar"
   vanillajar="$workdir/Minecraft/$mcver/$mcver.jar"
+  rm "$workdir/Paperclip/assembly/target/paperclip-${mcver}.jar"
 
   (
     cd "$workdir/Paperclip"
