@@ -98,7 +98,7 @@ index 49592c818..e49fa85d8 100644
 +	}
  }
 diff --git a/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java b/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java
-index 99ec21ffc..b9204bfab 100644
+index 99ec21ffc..44de14c36 100644
 --- a/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java
 +++ b/src/main/java/wtf/taavi/carrot/server/RealCarrotConfig.java
 @@ -1,5 +1,10 @@
@@ -124,7 +124,7 @@ index 99ec21ffc..b9204bfab 100644
  
  public class RealCarrotConfig implements CarrotConfig {
  	private static String HEADER = "carrot.yml";
-@@ -75,4 +84,34 @@ public class RealCarrotConfig implements CarrotConfig {
+@@ -75,4 +84,35 @@ public class RealCarrotConfig implements CarrotConfig {
  	public int getConfigVersion() {
  		return this.config.getInt("config-version", CONFIG_VERSION);
  	}
@@ -150,12 +150,13 @@ index 99ec21ffc..b9204bfab 100644
 +	private void processConflictingEnchantments() {
 +		this.config.addDefault("enchants.conflicting", DEFAULT_CONFLICTING_ENCHANTMENTS);
 +
-+		Map<String, List<String>> valuesFromConfig = this.config.getConfigurationSection("enchants.conflicting")
-+				.getValues(false)
-+				.entrySet()
-+				.stream()
-+				.collect(Collectors.toMap(Map.Entry::getKey, it -> (List<String>) it.getValue()));
-+		this.conflictingEnchantments = this.convertConflictingEnchantments(valuesFromConfig);
-+		System.out.print(this.conflictingEnchantments);
++		if (this.config.contains("enchants.conflicting", true)) {
++			Map<String, List<String>> valuesFromConfig = this.config.getConfigurationSection("enchants.conflicting")
++					.getValues(false)
++					.entrySet()
++					.stream()
++					.collect(Collectors.toMap(Map.Entry::getKey, it -> (List<String>) it.getValue()));
++			this.conflictingEnchantments = this.convertConflictingEnchantments(valuesFromConfig);
++		}
 +	}
  }
